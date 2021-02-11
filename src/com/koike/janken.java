@@ -1,6 +1,6 @@
 package com.koike;
 //test
-
+//test2
 import java.util.*;
 
 public class janken{
@@ -12,8 +12,8 @@ public class janken{
         Random rd = new Random();
 
 
-        int cp_hands = 0;//cpのジャンケン
-        int player_hands = 0;//自分のジャンケン
+        int cp_hands ;//cpのジャンケン
+        int player_hands ;//自分のジャンケン
 
         String[] janken_hands = {"グー", "チョキ", "パー"};
         String winner =null;
