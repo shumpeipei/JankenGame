@@ -72,8 +72,7 @@ public class janken{
         }
 
 
-
-//cpのジャンケンを乱数で生成
+        //cpのジャンケンを乱数で生成
         cp_hands = rd.nextInt(2);
         System.out.println(cp_hands);
 
