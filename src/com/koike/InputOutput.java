@@ -1,5 +1,6 @@
 package com.koike;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class InputOutput {
@@ -31,6 +32,11 @@ public class InputOutput {
     }
 
 
+    public int CpInput(){
+        Random rd = new Random();
+        int cp_hands = rd.nextInt(2); ;//cpのジャンケン
+        return cp_hands;
+    }
     //入力された値が0〜2以外であれば終了
     public int error(int error_number){
 
