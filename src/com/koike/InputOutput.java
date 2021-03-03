@@ -5,86 +5,69 @@ import java.util.Scanner;
 
 public class InputOutput {
 
-    public enum janken_hands{
-        グー,チョキ,パー;
-    }
 
     //プレイヤーのジャンケン入力
-    public int input() {
-        int player_hand = 0;
+    public JankenHands input() {
+        int playerHand = -1;
 
         Scanner sc = new Scanner(System.in);
 
-        //0-2以外の数値が入力されればエラー値を代入
+        //0-2以外の数値が入力されればnullを返す
         System.out.println("あなたは何を出す？(0:グー 1:チョキ 2:パー)");
+        JankenHands hands;
 
+
+        //文字が入力されていたらエラー
         try {
-            player_hand = sc.nextInt();
+            playerHand = sc.nextInt();
+
         } catch (Exception e) {
-            player_hand = -1;
-        }
-        //0~2以外はエラー
-        if (player_hand != 0 && player_hand != 1 && player_hand != 2) {
-            player_hand = -2;
-        }
-
-        return  player_hand ;
-    }
-
-
-    public int CpInput(){
-        Random rd = new Random();
-        int cp_hands = rd.nextInt(2); ;//cpのジャンケン
-        return cp_hands;
-    }
-    //入力された値が0〜2以外であれば終了
-    public int error(int error_number){
-
-        int i=0;
-
-        if(error_number == -1){
             System.out.println("文字が入力されています。0~2で入力してください。");
-            System.out.println("ゲームを終了します。");
-            i = -1;
-
-            System.exit(1);//プログラム強制終了
-        }else if(error_number == -2){
-            System.out.println("0~2で入力してください。");
-            System.out.println("ゲームを終了します。");
-
-            i = -2;
-            System.exit(1);//プログラム強制終了
+            hands = null;
+            return hands;
         }
 
-        return i;
+
+        //0~2以外はnullを返す
+        if (playerHand != 0 && playerHand != 1 && playerHand != 2) {
+            System.out.println("不正な値です。0~2で入力してください。");
+            hands = null;
+            return hands;
+        }
+
+        hands = JankenHands.getInstance(playerHand);
+
+        return hands;
+    }
+
+
+    public JankenHands cpInput() {
+        Random rd = new Random();
+        int cpHands = rd.nextInt(2);
+        JankenHands hands = JankenHands.getInstance(cpHands);
+        return hands;
     }
 
 
     //判定出力
-    public void output(int hantei , int p_num, int c_num) {
+    public void output(int judge, JankenHands p1, JankenHands p2) {
 
-        janken_hands[] hands = janken_hands.values();
+        System.out.println("あなたが出した手は" + p1);
+        System.out.println("相手が出した手は" + p2);
 
-        switch (hantei){
-            case 0:
-                System.out.println("あなたが出した手は" + hands[p_num]);
-                System.out.println("相手が出した手は" + hands[c_num]);
+        switch (judge) {
+            case Judge.JUDGE_HUMAN:
                 System.out.println("勝者はあなただぁ！");
                 break;
-            case 1:
-                System.out.println("あなたが出した手は" + hands[p_num]);
-                System.out.println("相手が出した手は" + hands[c_num]);
+            case Judge.JUDGE_COMPUTER:
                 System.out.println("勝者はコンピューターだぁ！");
                 break;
-            case 2:
-                System.out.println("あなたが出した手は" + hands[p_num]);
-                System.out.println("相手が出した手は" + hands[c_num]);
+            case Judge.JUDGE_DRAW:
                 System.out.println("今回は引き分けだっ");
                 break;
             default:
-
+                break;
         }
-        return;
     }
 
 }

@@ -1,33 +1,37 @@
 package com.koike;
 
-import java.util.*;
-
-public class janken{
-
+public class Janken {
 
 
     public static void main(String[] args) {
 
-        InputOutput inOut  = new InputOutput();
-        Judge ju  = new Judge();
+        InputOutput inOut = new InputOutput();
+        Judge ju = new Judge();
 
-        int cp_hands = 0; ;
-        int player_hands = 0;
-        int hantei = -1;
+        JankenHands cpHands;
+        JankenHands playerHands;
 
-        player_hands = inOut.input();//プレイヤー入力処理
-        cp_hands = inOut.CpInput();//CP入力処理
-        //入力値エラー判定
-        if(inOut.error(player_hands) == -1){
-            //文字入力エラー
-            System.exit(1);//プログラム強制終了
-        }else if(inOut.error(player_hands) == -2){
-            //数値エラー
-            System.exit(1);//プログラム強制終了
+        int judge = -1;
+
+        playerHands = inOut.input();//プレイヤー入力処理
+        cpHands = inOut.cpInput();//CP入力処理
+
+        if (playerHands == null) {
+            System.out.println("ゲームを終了します。");
+            System.exit(1);
+            return;
         }
-        hantei = ju.judge(player_hands,cp_hands);//勝敗判定
-        inOut.output(hantei,player_hands,cp_hands);//判定出力
+
+
+        judge = ju.judge(playerHands, cpHands);//勝敗判定
+        if (judge == 100) {
+            System.out.println("不正な値です。ゲーム終了します");
+            System.exit(1);
+            return;
+        }
+        inOut.output(judge, playerHands, cpHands);//判定出力
         System.exit(0);//プログラム終了
+        return;
 
-        }
     }
+}
